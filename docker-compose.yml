@@ -1,12 +1,14 @@
 services:
   nibepi:
-    build: .
+    image: ghcr.io/jer0ena/nibepi:latest
     container_name: nibepi
     restart: unless-stopped
     ports:
       - "1880:1880"
     devices:
-      - "/dev/serial/by-id/usb-XXXX:/dev/ttyUSB0"
+      # Adjust this to match your own RS485 adapter's by-id path
+      # (find it with `ls -l /dev/serial/by-id/` on the Docker host).
+      - "/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_A10OQWYN-if00-port0:/dev/ttyUSB0"
     volumes:
       - nibepi-config:/etc/nibepi
 
