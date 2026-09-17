@@ -238,6 +238,7 @@ function showPortClose() {
     console.log('Port closed. Data rate: ' + myPort.baudRate);
 }
 function showError(error) {
+    console.warn(`Serial port error: ${(error && (error.message || error)) || 'unknown error'}`);
     // Port may be held by a zombie instance — retry a few times to let it release
     if(portOpenRetries < 25) {
         portOpenRetries++;
