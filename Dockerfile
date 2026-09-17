@@ -8,6 +8,16 @@ COPY . .
 
 # ---- Runtime stage: no compiler, no build deps, non-root user ----
 FROM node:22-alpine
+RUN apk update && apk upgrade --no-cache \
+    && rm -rf \
+        /usr/local/lib/node_modules/npm \
+        /usr/local/lib/node_modules/corepack \
+        /usr/local/bin/npm \
+        /usr/local/bin/npx \
+        /usr/local/bin/corepack \
+        /opt/yarn-v1.22.22 \
+        /usr/local/bin/yarn \
+        /usr/local/bin/yarnpkg
 WORKDIR /app
 RUN mkdir -p /etc/nibepi && chown -R node:node /etc/nibepi
 COPY --from=build --chown=node:node /app ./
