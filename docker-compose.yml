@@ -3,6 +3,18 @@ services:
     image: ghcr.io/jer0ena/nibepi:latest
     container_name: nibepi
     restart: unless-stopped
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp
+    group_add:
+      # Must match the numeric GID of the `dialout` group that owns the
+      # RS485 device on this Docker host (needed since the container runs
+      # as a non-root user). Check with: stat -c '%g' /dev/ttyUSB0
+      - "20"
     ports:
       - "1880:1880"
     devices:
